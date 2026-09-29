@@ -96,7 +96,8 @@
 
   function showDashboard(data) {
     const weeks = data.weeks.map(([d, u]) => ({ date: parseDate(d), units: u }));
-    state = { weeks, months: toMonthly(weeks), range: 0, gran: "month", granTouched: false };
+    const spanMonths = (weeks[weeks.length - 1].date - weeks[0].date) / (30.44 * 864e5);
+    state = { weeks, months: toMonthly(weeks), range: 0, gran: spanMonths <= 18 ? "week" : "month", granTouched: false, short: spanMonths <= 18 };
 
     $("login-view").hidden = true;
     $("dash-view").hidden = false;
@@ -125,7 +126,7 @@
 
   document.querySelectorAll("#range-seg button").forEach((b) => b.addEventListener("click", () => {
     state.range = Number(b.dataset.range);
-    if (!state.granTouched) state.gran = state.range && state.range <= 12 ? "week" : "month";
+    if (!state.granTouched) state.gran = (state.range ? state.range <= 12 : state.short) ? "week" : "month";
     render();
   }));
   document.querySelectorAll("#gran-seg button").forEach((b) => b.addEventListener("click", () => {
@@ -209,7 +210,9 @@
     const t0 = +series[0].date, t1 = +series[series.length - 1].date;
     const yMax = niceMax(Math.max(...series.map((p) => p.units)));
     const x = (d) => m.l + ((+d - t0) / (t1 - t0)) * iw;
-    const y = (v) => m.t + ih - (v / yMax) * ih;
+    const minV = Math.min(0, ...series.map((p) => p.units));
+    const yMin = minV < 0 ? -Math.max(yMax / 20, niceMax(-minV) / 4) : 0;
+    const y = (v) => m.t + ih - ((v - yMin) / (yMax - yMin)) * ih;
 
     const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `Line chart of ${state.gran}ly unit sales` }, host);
     const defs = el("defs", {}, svg);
@@ -226,11 +229,9 @@
     }
     el("text", { x: m.l - 8, y: y(0) + 4, "text-anchor": "end" }, svg).textContent = "0";
 
-    for (const tk of xTicks(series)) {
-      const xx = x(tk.date);
-      if (xx < m.l + 12 || xx > W - m.r - 12) continue;
-      el("text", { x: xx, y: H - 6, "text-anchor": "middle" }, svg).textContent = tk.label;
-    }
+    const shown = xTicks(series).filter((tk) => { const xx = x(tk.date); return xx >= m.l + 12 && xx <= W - m.r - 12; });
+    if (shown.length && !shown.some((tk) => /^\d{4}$/.test(tk.label))) shown[0].label += ` ${shown[0].date.getFullYear()}`;
+    for (const tk of shown) el("text", { x: x(tk.date), y: H - 6, "text-anchor": "middle" }, svg).textContent = tk.label;
 
     const pts = series.map((p) => [x(p.date), y(p.units)]);
     const linePath = pts.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join("");
