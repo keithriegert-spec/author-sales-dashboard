@@ -5,16 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
   <title>Author Sales Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232a78d6'/%3E%3Cpath d='M8 22l5-6 4 3 7-9' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='16 31 262 158'%3E%3Cpolygon fill='%23fcd68f' points='18,138 132,84 132,178 18,178'/%3E%3Cpolygon fill='%238e9663' points='102,33 200,38 216,168 102,168'/%3E%3Cpolygon fill='%23c64b14' points='185,101 275,121 275,187 185,187'/%3E%3Cpolygon fill='%238c7e38' points='102,98.2 132,84 132,168 102,168'/%3E%3Cpolygon fill='%236e2c08' points='185,101 207.8,106.1 216,168 185,168'/%3E%3C/svg%3E">
 </head>
 <body>
   <!-- Sign in -->
   <main id="login-view" class="login" hidden>
     <form id="login-form" class="login-card" autocomplete="on" novalidate>
-      <p class="eyebrow">Stable Book Group</p>
+      <div class="brand brand-stack" role="img" aria-label="The Stable Book Group">
+        <svg class="mark" viewBox="16 31 262 158" aria-hidden="true" focusable="false">
+          <polygon class="m-gold" points="18,138 132,84 132,178 18,178"/>
+          <polygon class="m-sage" points="102,33 200,38 216,168 102,168"/>
+          <polygon class="m-rust" points="185,101 275,121 275,187 185,187"/>
+          <polygon class="m-gold-sage" points="102,98.2 132,84 132,168 102,168"/>
+          <polygon class="m-sage-rust" points="185,101 207.8,106.1 216,168 185,168"/>
+        </svg>
+        <div class="wordmark"><span class="wm-1">THE STABLE</span><span class="wm-2">BOOK GROUP</span></div>
+      </div>
+      <div class="rule"></div>
       <h1>Author Sales Dashboard</h1>
       <p class="muted">Sign in with the username and password you were given.</p>
       <label>Username
@@ -30,12 +43,27 @@
 
   <!-- Dashboard -->
   <div id="dash-view" hidden>
+    <div class="brandbar">
+      <div class="brandbar-inner">
+        <div class="brand" role="img" aria-label="The Stable Book Group">
+          <svg class="mark" viewBox="16 31 262 158" aria-hidden="true" focusable="false">
+          <polygon class="m-gold" points="18,138 132,84 132,178 18,178"/>
+          <polygon class="m-sage" points="102,33 200,38 216,168 102,168"/>
+          <polygon class="m-rust" points="185,101 275,121 275,187 185,187"/>
+          <polygon class="m-gold-sage" points="102,98.2 132,84 132,168 102,168"/>
+          <polygon class="m-sage-rust" points="185,101 207.8,106.1 216,168 185,168"/>
+        </svg>
+          <div class="wordmark"><span class="wm-1">THE STABLE</span><span class="wm-2">BOOK GROUP</span></div>
+          <span class="brand-tag">Author Portal</span>
+        </div>
+        <button id="logout" class="ghost" type="button">Sign out</button>
+      </div>
+    </div>
     <header class="topbar">
       <div>
-        <p class="eyebrow">Stable Book Group · Author Sales</p>
+        <p class="eyebrow">Author sales</p>
         <h1 id="author-name"></h1>
       </div>
-      <button id="logout" class="ghost" type="button">Sign out</button>
     </header>
 
     <div class="layout">
