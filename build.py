@@ -11,6 +11,7 @@ Usage:
     python3 build.py                      # uses the newest Sales_History*.xlsx
     python3 build.py path/to/workbook.xlsx
     python3 build.py --reset-password "Keith Riegert"
+    python3 build.py --reset-all          # new random passwords for everyone
 """
 import base64
 import csv
@@ -96,6 +97,8 @@ def main(argv: list) -> None:
     for a in it:
         if a == "--reset-password":
             reset.add(next(it))
+        elif a == "--reset-all":
+            reset.add("*")
         else:
             args.append(a)
 
@@ -125,7 +128,7 @@ def main(argv: list) -> None:
             acct = accounts[sheet_name] = {"sheet_name": sheet_name, "display_name": sheet_name.strip(),
                                            "username": u, "password": new_password()}
             print(f"  new   {sheet_name!r}: username {u}")
-        elif sheet_name in reset:
+        elif sheet_name in reset or "*" in reset:
             acct["password"] = new_password()
             print(f"  reset {sheet_name!r}: new password issued")
 

@@ -21,6 +21,7 @@ A password-protected sales dashboard for authors, hosted free on GitHub Pages.
 3. Commit and push `site/`. GitHub Actions redeploys in about a minute.
 
 Reset one author's password: `python3 build.py --reset-password "Sheet Name"`.
+Issue new random passwords to everyone: `python3 build.py --reset-all`.
 
 Preview locally: `python3 -m http.server 8765 --directory site`, then open
 http://localhost:8765.
