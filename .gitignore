@@ -1,0 +1,7 @@
+# Raw sales data and credentials must NEVER be committed.
+*.xlsx
+*.xls
+*.csv
+authors.csv
+.DS_Store
+__pycache__/

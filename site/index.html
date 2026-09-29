@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <title>Author Sales Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232a78d6'/%3E%3Cpath d='M8 22l5-6 4 3 7-9' stroke='white' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+</head>
+<body>
+  <!-- Sign in -->
+  <main id="login-view" class="login" hidden>
+    <form id="login-form" class="login-card" autocomplete="on" novalidate>
+      <p class="eyebrow">Stable Book Group</p>
+      <h1>Author Sales Dashboard</h1>
+      <p class="muted">Sign in with the username and password you were given.</p>
+      <label>Username
+        <input id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+      </label>
+      <label>Password
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+      </label>
+      <p id="login-error" class="error" role="alert" hidden></p>
+      <button id="login-btn" type="submit">Sign in</button>
+    </form>
+  </main>
+
+  <!-- Dashboard -->
+  <div id="dash-view" hidden>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Stable Book Group · Author Sales</p>
+        <h1 id="author-name"></h1>
+      </div>
+      <button id="logout" class="ghost" type="button">Sign out</button>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Sales totals">
+        <section class="stat">
+          <h2>Most recent week</h2>
+          <p class="stat-value" id="stat-week"></p>
+          <p class="stat-sub" id="stat-week-sub"></p>
+          <p class="stat-delta" id="stat-week-delta"></p>
+        </section>
+        <section class="stat">
+          <h2>Year to date</h2>
+          <p class="stat-value" id="stat-ytd"></p>
+          <p class="stat-sub" id="stat-ytd-sub"></p>
+          <p class="stat-delta" id="stat-ytd-delta"></p>
+        </section>
+        <section class="stat">
+          <h2>Lifetime</h2>
+          <p class="stat-value" id="stat-life"></p>
+          <p class="stat-sub" id="stat-life-sub"></p>
+        </section>
+      </aside>
+
+      <section class="card chart-card" aria-labelledby="chart-title">
+        <div class="chart-head">
+          <div>
+            <h2 id="chart-title">Unit sales</h2>
+            <p class="muted" id="chart-sub"></p>
+          </div>
+          <div class="controls">
+            <div class="seg" role="group" aria-label="Time range" id="range-seg">
+              <button type="button" data-range="6">6M</button>
+              <button type="button" data-range="12">1Y</button>
+              <button type="button" data-range="36">3Y</button>
+              <button type="button" data-range="60">5Y</button>
+              <button type="button" data-range="0">All</button>
+            </div>
+            <div class="seg" role="group" aria-label="Grouping" id="gran-seg">
+              <button type="button" data-gran="week">Weekly</button>
+              <button type="button" data-gran="month">Monthly</button>
+            </div>
+          </div>
+        </div>
+        <div id="chart" class="chart"></div>
+        <div id="tooltip" class="tooltip" hidden></div>
+        <details class="table-view">
+          <summary>View as table</summary>
+          <div class="table-wrap"><table id="data-table"><thead><tr><th scope="col">Period</th><th scope="col">Units</th></tr></thead><tbody></tbody></table></div>
+        </details>
+      </section>
+    </div>
+    <footer class="foot muted" id="foot"></footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
